@@ -2,7 +2,7 @@
   <div>
     <custom-header @create-account="handleAccountCreate" @login="handleLogin" />
     <div
-      class="flex justify-center py-10 bg-brand-navyblue absolute bottom-0 w-full"
+      class="flex justify-center py-10 bg-brand-navyblue sm:absolute bottom-0 w-full"
     >
       <p class="font-medium text-center text-brand-gray">
         Christian Toledo 2021 - Made with 💙 and ☕

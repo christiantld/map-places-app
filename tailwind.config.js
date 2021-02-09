@@ -541,7 +541,8 @@ module.exports = {
     outline: {
       none: ['2px solid transparent', '2px'],
       white: ['2px dotted white', '2px'],
-      black: ['2px dotted black', '2px']
+      black: ['2px dotted black', '2px'],
+      success: ['2px solid #16c79a', '0px']
     },
     padding: theme => theme('spacing'),
     placeholderColor: theme => theme('colors'),

@@ -2,12 +2,12 @@
   <header class="header">
     <div class="header-group">
       <div
-        class="flex items-center justify-between py-10 border-b-2 border-brand-navyblue w-full"
+        class="flex items-center justify-between py-8 border-b-2 border-brand-navyblue w-full"
       >
-        <div class="w-28 lg:w-36">
+        <div class="w-10">
           <icon
             name="logo"
-            size="35"
+            size="42"
             :color="brandColors.navyblue"
             alt="logo"
             class="w-full"
@@ -37,7 +37,7 @@
         </h1>
         <p class="text-lg font-medium pt-5 text-brand-darkinfo">
           Explore,favorite, avalie e compartilhe
-          <br class="hidden lg:inline-block" />
+          <br />
           seus locais com outros usuários.
         </p>
         <div>
@@ -83,6 +83,29 @@ export default {
     background-size: 628px;
     background-position: 100% 80%;
     background-repeat: no-repeat;
+  }
+}
+@media (max-width: 1079px) {
+  .header-group {
+    background-image: url('../../assets/images/ocean.png');
+    background-size: 500px;
+    background-position: 100% 65%;
+    background-repeat: no-repeat;
+  }
+}
+
+@media (max-width: 930px) {
+  .header-group {
+    background-image: url('../../assets/images/ocean.png');
+    background-size: 400px;
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+  }
+}
+
+@media (max-width: 830px) {
+  .header-group {
+    background-image: none;
   }
 }
 </style>
