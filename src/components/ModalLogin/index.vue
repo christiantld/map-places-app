@@ -17,7 +17,8 @@
       <label class="block">
         <span class="text-lg font-medium text-brand-darkinfo">E-mail</span>
         <input
-          v-model="state.email.value"
+          v-model.trim="state.email.value"
+          ref="firstInput"
           type="email"
           class="custom-input"
           :class="{
@@ -44,9 +45,9 @@
         />
         <span
           v-if="!!state.password.errorMessage"
+          v-html="state.password.errorMessage"
           class="block font-medium text-brand-danger"
-          >{{ state.password.errorMessage }}</span
-        >
+        ></span>
       </label>
       <button
         :disabled="state.isLoading"
@@ -54,42 +55,46 @@
         class="mt-10 text-2xl text-white rounded-full bg-brand-navyblue hover:bg-brand-success custom-btn"
         :class="{ 'opacity-50': state.isLoading }"
       >
-        <icon v-if="state.isLoading" name="loading" class="animate-spin" />
+        <icon
+          v-if="state.isLoading"
+          name="loading"
+          class="animate-spin"
+          size="32"
+        />
         <span v-else>Entrar</span>
       </button>
     </form>
   </div>
 </template>
 <script>
-import { reactive } from 'vue'
-// import { useRouter } from 'vue-router'
-// import { useToast } from 'vue-toastification'
+import { reactive, ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
 import { useField } from 'vee-validate'
 import useModal from '@/hooks/useModal'
 import Icon from '@/components/Icon'
-import {
-  validateEmptyAndLength5,
-  validateEmptyAndEmail
-} from '@/utils/validators'
-// import services from '@/services'
+import { emailValidFormat, passwordValidFormat } from '@/utils/validators'
+import services from '@/services'
 
 export default {
   components: { Icon },
   setup() {
     // Hooks
     const modal = useModal()
-    // const router = useRouter()
-    // const toast = useToast()
+    const router = useRouter()
+    const toast = useToast()
 
     const { value: emailValue, errorMessage: emailErrorMessage } = useField(
       'email',
-      validateEmptyAndEmail
+      emailValidFormat
     )
 
     const {
       value: passwordValue,
       errorMessage: passwordErrorMessage
-    } = useField('password', validateEmptyAndLength5)
+    } = useField('password', passwordValidFormat)
+
+    const firstInput = ref(null)
 
     const state = reactive({
       hasError: false,
@@ -104,39 +109,48 @@ export default {
       }
     })
 
+    onMounted(() => {
+      firstInput.value.focus()
+    })
+
     async function handleSubmit() {
-      // toast.clear()
-      // try {
-      //   state.isLoading = true
-      //   const { data, errors } = await services.auth.login({
-      //     email: state.email.value,
-      //     password: state.password.value
-      //   })
-      //   if (!errors) {
-      //     window.localStorage.setItem('token', data.token)
-      //     router.push({ name: 'Feedbacks' })
-      //     state.isLoading = false
-      //     modal.close()
-      //     return
-      //   }
-      //   if (errors.status === 404) {
-      //     toast.error('Cadastro não encontrado')
-      //   }
-      //   if (errors.status === 401) {
-      //     toast.error('Cadastro inválido')
-      //   }
-      //   if (errors.status === 400) {
-      //     toast.error('Ocorreu um erro ao fazer login')
-      //   }
-      //   state.isLoading = false
-      // } catch (error) {
-      //   state.isLoading = false
-      //   state.hasError = !!error
-      //   toast.error('Ocorreu um erro ao fazer login')
-      // }
+      toast.clear()
+      if (!state.email.value || !state.password.value) {
+        toast.warning('Verifique seus dados e tente novamente')
+        return
+      }
+
+      try {
+        state.isLoading = true
+        const { data, errors } = await services.auth.login({
+          email: state.email.value,
+          password: state.password.value
+        })
+        if (!errors) {
+          window.localStorage.setItem('token', data.token)
+          router.push({ name: 'Discovery' })
+          state.isLoading = false
+          modal.close()
+          return
+        }
+        if (errors.status === 404) {
+          toast.error('Cadastro não encontrado')
+        }
+        if (errors.status === 401) {
+          toast.error('Cadastro inválido')
+        }
+        if (errors.status === 400) {
+          toast.error('Cadastro não encontrado')
+        }
+        state.isLoading = false
+      } catch (error) {
+        state.isLoading = false
+        state.hasError = !!error
+        toast.error('Ocorreu um erro ao fazer login')
+      }
     }
 
-    return { state, close: modal.close, handleSubmit }
+    return { state, close: modal.close, handleSubmit, firstInput }
   }
 }
 </script>

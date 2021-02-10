@@ -4,8 +4,9 @@
 
 <script>
 import Logo from './Logo.vue'
+import Loading from './Loading.vue'
 export default {
-  components: { Logo },
+  components: { Logo, Loading },
   props: {
     name: { type: String, required: true }
   }

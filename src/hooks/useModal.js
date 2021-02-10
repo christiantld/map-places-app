@@ -5,7 +5,6 @@ const EVENT_NAME = 'modal:toggle'
 export default function useModal() {
   function open(payload = {}) {
     bus.emit(EVENT_NAME, { status: true, ...payload })
-    console.log(bus.emit(EVENT_NAME, { status: true, ...payload }))
   }
 
   function close(payload = {}) {

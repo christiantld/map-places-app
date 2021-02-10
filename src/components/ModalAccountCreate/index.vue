@@ -15,7 +15,8 @@
       <label class="block">
         <span class="text-lg font-medium text-brand-darkinfo">Nome</span>
         <input
-          v-model="state.name.value"
+          v-model.trim="state.name.value"
+          ref="firstInput"
           type="text"
           class="custom-input"
           :class="{
@@ -32,7 +33,7 @@
       <label class="block mt-4">
         <span class="text-lg font-medium text-brand-darkinfo">E-mail</span>
         <input
-          v-model="state.email.value"
+          v-model.trim="state.email.value"
           type="email"
           class="custom-input"
           :class="{
@@ -59,9 +60,9 @@
         />
         <span
           v-if="!!state.password.errorMessage"
+          v-html="state.password.errorMessage"
           class="block font-medium text-brand-danger"
-          >{{ state.password.errorMessage }}</span
-        >
+        ></span>
       </label>
       <button
         :disabled="state.isLoading"
@@ -69,24 +70,30 @@
         class="mt-10 text-2xl font-bold text-white rounded-full bg-brand-navyblue hover:bg-brand-success custom-btn"
         :class="{ 'opacity-50': state.isLoading }"
       >
-        <icon v-if="state.isLoading" name="loading" class="animate-spin" />
-        <span v-else>Entrar</span>
+        <icon
+          v-if="state.isLoading"
+          name="loading"
+          class="animate-spin"
+          size="32"
+        />
+        <span v-else>Criar</span>
       </button>
     </form>
   </div>
 </template>
 <script>
-import { reactive } from 'vue'
+import { reactive, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { useField } from 'vee-validate'
 import useModal from '@/hooks/useModal'
 import Icon from '@/components/Icon'
 import {
-  validateEmptyAndLength5,
-  validateEmptyAndEmail
+  nameValidFormat,
+  emailValidFormat,
+  passwordValidFormat
 } from '@/utils/validators'
-// import services from '@/services'
+import services from '@/services'
 
 export default {
   components: { Icon },
@@ -98,18 +105,20 @@ export default {
 
     const { value: nameValue, errorMessage: nameErrorMessage } = useField(
       'name',
-      validateEmptyAndLength5
+      nameValidFormat
     )
 
     const { value: emailValue, errorMessage: emailErrorMessage } = useField(
       'email',
-      validateEmptyAndEmail
+      emailValidFormat
     )
 
     const {
       value: passwordValue,
       errorMessage: passwordErrorMessage
-    } = useField('password', validateEmptyAndLength5)
+    } = useField('password', passwordValidFormat)
+
+    const firstInput = ref(null)
 
     const state = reactive({
       hasError: false,
@@ -128,45 +137,49 @@ export default {
       }
     })
 
-    async function login({ email, password }) {
-      // const { data, errors } = await services.auth.login({ email, password })
-      // if (!errors) {
-      //   window.localStorage.setItem('token', data.token)
-      //   router.push({ name: 'Feedbacks' })
-      //   modal.close()
-      // }
-      // state.isLoading = false
-    }
+    onMounted(() => {
+      firstInput.value.focus()
+    })
 
     async function handleSubmit() {
-      // try {
-      //   toast.clear()
-      //   state.isLoading = true
-      //   const { errors } = await services.auth.register({
-      //     name: state.name.value,
-      //     email: state.email.value,
-      //     password: state.password.value
-      //   })
-      //   if (!errors) {
-      //     toast.success('Cadastro realizado com sucesso')
-      //     await login({
-      //       email: state.email.value,
-      //       password: state.password.value
-      //     })
-      //     return
-      //   }
-      //   if (errors.status === 400) {
-      //     toast.error('Ocorreu um erro ao fazer o cadastro')
-      //   }
-      //   state.isLoading = false
-      // } catch (error) {
-      //   state.isLoading = false
-      //   state.hasError = !!error
-      //   toast.error('Ocorreu um erro ao fazer o cadastro')
-      // }
+      if (!state.email.value || !state.password.value || !state.name.value) {
+        toast.warning('Verifique seus dados e tente novamente')
+        return
+      }
+      try {
+        toast.clear()
+        state.isLoading = true
+        const { errors } = await services.auth.register({
+          name: state.name.value,
+          email: state.email.value,
+          password: state.password.value
+        })
+        if (!errors) {
+          toast.success(
+            'Cadastro realizado com sucesso! Agora acesse a plataforma'
+          )
+          modal.close()
+          return
+        }
+        if (errors.status === 400) {
+          toast.error('Ocorreu um erro ao fazer o cadastro')
+        }
+        state.isLoading = false
+      } catch (error) {
+        state.isLoading = false
+        state.hasError = !!error
+        toast.error('Ocorreu um erro ao fazer o cadastro')
+      }
     }
 
-    return { state, close: modal.close, handleSubmit, login, toast, router }
+    return {
+      state,
+      close: modal.close,
+      handleSubmit,
+      toast,
+      router,
+      firstInput
+    }
   }
 }
 </script>

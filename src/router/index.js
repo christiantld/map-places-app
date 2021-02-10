@@ -3,6 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const Home = defineAsyncComponent(() => import('@/views/Home/index.vue'))
 const Profile = defineAsyncComponent(() => import('@/views/Profile/index.vue'))
+const Discovery = defineAsyncComponent(() =>
+  import('@/views/Discovery/index.vue')
+)
 
 const routes = [
   {
@@ -14,6 +17,14 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile,
+    meta: {
+      hasAuth: true
+    }
+  },
+  {
+    path: '/discovery',
+    name: 'Discovery',
+    component: Discovery,
     meta: {
       hasAuth: true
     }

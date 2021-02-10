@@ -20,11 +20,10 @@ export function passwordValidFormat(value) {
     return '*Este campo é obrigatório'
   }
   // Minimum eight characters, at least one letter and one number:
-  const isValid = /^(?=.*[a-z])(?=.*\d).{6,15}$/i.test(value)
+  const isValid = /^(?=.*[a-z]).{6,}$/i.test(value)
   if (!isValid) {
     return ` - Mínimo de 6 caracteres <br/>
     - Pelo menos uma letra <br/>
-    - Pelo menos um número
     `
   }
 
