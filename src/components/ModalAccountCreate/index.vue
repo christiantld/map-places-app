@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between">
-    <h1 class="text-3xl font-black text-brand-darkinfo">Crie uma conta</h1>
+    <h1 class="text-3xl font-black text-brand-navyblue">Crie uma conta</h1>
 
     <button
       class="text-4xl text-gray-400 hover:text-gray-600 focus:outline-none transition duration-300"
@@ -13,7 +13,7 @@
   <div class="mt-10">
     <form @submit.prevent="handleSubmit">
       <label class="block">
-        <span class="text-lg font-medium text-brand-darkinfo">Nome</span>
+        <span class="text-lg font-medium text-brand-navyblue">Nome</span>
         <input
           v-model.trim="state.name.value"
           ref="firstInput"
@@ -31,7 +31,7 @@
         >
       </label>
       <label class="block mt-4">
-        <span class="text-lg font-medium text-brand-darkinfo">E-mail</span>
+        <span class="text-lg font-medium text-brand-navyblue">E-mail</span>
         <input
           v-model.trim="state.email.value"
           type="email"
@@ -48,7 +48,7 @@
         >
       </label>
       <label class="block mt-4">
-        <span class="text-lg font-medium text-brand-darkinfo">Senha</span>
+        <span class="text-lg font-medium text-brand-navyblue">Senha</span>
         <input
           v-model="state.password.value"
           type="password"
@@ -67,7 +67,7 @@
       <button
         :disabled="state.isLoading"
         type="submit"
-        class="mt-10 text-2xl font-bold text-white rounded-full bg-brand-navyblue hover:bg-brand-success custom-btn"
+        class="mt-10 text-2xl font-bold text-white rounded-full bg-brand-navyblue hover:bg-mediumslateblue-600 custom-btn"
         :class="{ 'opacity-50': state.isLoading }"
       >
         <icon
@@ -189,6 +189,6 @@ export default {
 }
 
 .custom-input {
-  @apply outline-none block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded focus:ring-0 focus:border-brand-success;
+  @apply outline-none block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded focus:ring-0 focus:border-mediumslateblue-600;
 }
 </style>

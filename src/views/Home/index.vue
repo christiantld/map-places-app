@@ -11,13 +11,23 @@
   </div>
 </template>
 <script>
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import CustomHeader from './CustomHeader.vue'
 import useModal from '@/hooks/useModal'
 
 export default {
   components: { CustomHeader },
   setup() {
+    const router = useRouter()
     const modal = useModal()
+    onMounted(() => {
+      const token = window.localStorage.getItem('token')
+      if (token) {
+        router.push({ name: 'Discovery' })
+      }
+    })
+
     function handleLogin() {
       modal.open({
         component: 'ModalLogin'

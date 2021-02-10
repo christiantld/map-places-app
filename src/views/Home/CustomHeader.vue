@@ -15,14 +15,14 @@
         </div>
         <div class="flex">
           <button
-            class="rounded-full text-brand-darkinfo hover:text-brand-success custom-btn"
+            class="rounded-full text-brand-darkinfo hover:text-mediumslateblue-600 custom-btn"
             @click="() => emit('create-account')"
           >
             Crie uma conta
           </button>
           <button
             @click="() => emit('login')"
-            class="bg-brand-navyblue rounded-full text-brand-gray hover:bg-brand-success custom-btn"
+            class="bg-brand-navyblue rounded-full text-brand-gray hover:bg-mediumslateblue-600 custom-btn"
           >
             Entrar
           </button>
@@ -43,7 +43,7 @@
         <div>
           <button
             @click="() => emit('create-account')"
-            class="mt-10 bg-brand-navyblue rounded-full text-brand-gray hover:bg-brand-success custom-btn"
+            class="mt-10 bg-brand-navyblue rounded-full text-brand-gray hover:bg-mediumslateblue-600 custom-btn"
           >
             Crie sua conta agora
           </button>
