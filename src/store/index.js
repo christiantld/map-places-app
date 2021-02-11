@@ -1,8 +1,8 @@
 import { readonly } from 'vue'
-import UserStore from './user'
-import GlobalStore from './global'
+import UserModule from './user'
+import GlobalModule from './global'
 
 export default readonly({
-  User: UserStore,
-  Global: GlobalStore
+  User: UserModule,
+  Global: GlobalModule
 })

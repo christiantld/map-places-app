@@ -52,7 +52,7 @@
       <button
         :disabled="state.isLoading"
         type="submit"
-        class="mt-10 text-2xl text-white rounded-full bg-brand-navyblue hover:bg-mediumslateblue-600 custom-btn"
+        class="mt-10 text-2xl text-white rounded-full bg-brand-navyblue hover:bg-mediumslateblue-500 custom-btn"
         :class="{ 'opacity-50': state.isLoading }"
       >
         <icon
@@ -160,6 +160,6 @@ export default {
 }
 
 .custom-input {
-  @apply outline-none block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded focus:ring-0 focus:border-mediumslateblue-600;
+  @apply outline-none block w-full px-4 py-3 mt-1 text-lg bg-gray-100 focus:bg-white border-2 border-transparent rounded focus:ring-0 focus:border-mediumslateblue-600;
 }
 </style>
