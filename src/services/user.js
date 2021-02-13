@@ -6,5 +6,13 @@ export default httpClient => ({
     return {
       data: response.data
     }
+  },
+
+  updateUser: async payload => {
+    const response = await httpClient.put('/users/2', { ...payload })
+
+    return {
+      data: response.data
+    }
   }
 })
