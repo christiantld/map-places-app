@@ -25,13 +25,15 @@ const ModalLogin = defineAsyncComponent(() => import('../ModalLogin'))
 const ModalAccountCreate = defineAsyncComponent(() =>
   import('../ModalAccountCreate')
 )
+const ModalAvatar = defineAsyncComponent(() => import('../ModalAvatar'))
 
 const DEFAULT_WIDTH = 'w-3/4 lg:w-1/3'
 
 export default {
   components: {
     ModalLogin,
-    ModalAccountCreate
+    ModalAccountCreate,
+    ModalAvatar
   },
   setup() {
     const modal = useModal()
