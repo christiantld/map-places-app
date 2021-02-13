@@ -75,6 +75,7 @@ import useModal from '@/hooks/useModal'
 import Icon from '@/components/Icon'
 import { emailValidFormat, passwordValidFormat } from '@/utils/validators'
 import services from '@/services'
+import { setCurrentUser } from '@/store/user'
 
 export default {
   components: { Icon },
@@ -120,14 +121,26 @@ export default {
         return
       }
 
+      if (!!state.email.errorMessage || !!state.password.errorMessage) {
+        toast.warning('Verifique seus dados e tente novamente')
+        return
+      }
+
       try {
         state.isLoading = true
         const { data, errors } = await services.auth.login({
           email: state.email.value,
           password: state.password.value
         })
+        const { data: userData } = await services.user.getMe()
+
         if (!errors) {
           window.localStorage.setItem('token', data.token)
+          setCurrentUser(userData.data)
+          /* Using localStorage for further updates because
+          Reqres API don't really update the user data */
+          const currentUser = JSON.stringify(userData.data)
+          window.localStorage.setItem('currentUser', currentUser)
           router.push({ name: 'Discovery' })
           state.isLoading = false
           modal.close()
@@ -154,12 +167,12 @@ export default {
   }
 }
 </script>
-<style lang="postcss">
+<style lang="postcss" scoped>
 .custom-btn {
   @apply px-6 py-2 font-bold focus:outline-none transition duration-300;
 }
 
 .custom-input {
-  @apply outline-none block w-full px-4 py-3 mt-1 text-lg bg-gray-100 focus:bg-white border-2 border-transparent rounded focus:ring-0 focus:border-mediumslateblue-600;
+  @apply outline-none block w-full px-4 py-3 mt-1 text-lg bg-gray-100 focus:bg-white border-2 border-transparent rounded focus:ring-0 focus:border-mediumslateblue-600 ring-2 ring-mediumslateblue-100;
 }
 </style>

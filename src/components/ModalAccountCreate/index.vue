@@ -22,12 +22,29 @@
           :class="{
             'border-brand-danger': !!state.name.errorMessage
           }"
-          placeholder="Seu nome completo"
+          placeholder="Seu primeiro nome"
         />
         <span
           v-if="!!state.name.errorMessage"
           class="block font-medium text-brand-danger"
           >{{ state.name.errorMessage }}</span
+        >
+      </label>
+      <label class="block mt-4">
+        <span class="text-lg font-medium text-brand-navyblue">Sobrenome</span>
+        <input
+          v-model.trim="state.surname.value"
+          type="text"
+          class="custom-input"
+          :class="{
+            'border-brand-danger': !!state.surname.errorMessage
+          }"
+          placeholder="Seu sobrenome"
+        />
+        <span
+          v-if="!!state.surname.errorMessage"
+          class="block font-medium text-brand-danger"
+          >{{ state.surname.errorMessage }}</span
         >
       </label>
       <label class="block mt-4">
@@ -89,7 +106,7 @@ import { useField } from 'vee-validate'
 import useModal from '@/hooks/useModal'
 import Icon from '@/components/Icon'
 import {
-  nameValidFormat,
+  emptyOrLength3,
   emailValidFormat,
   passwordValidFormat
 } from '@/utils/validators'
@@ -105,7 +122,12 @@ export default {
 
     const { value: nameValue, errorMessage: nameErrorMessage } = useField(
       'name',
-      nameValidFormat
+      emptyOrLength3
+    )
+
+    const { value: surnameValue, errorMessage: surnameErrorMessage } = useField(
+      'surname',
+      emptyOrLength3
     )
 
     const { value: emailValue, errorMessage: emailErrorMessage } = useField(
@@ -134,6 +156,10 @@ export default {
       name: {
         value: nameValue,
         errorMessage: nameErrorMessage
+      },
+      surname: {
+        value: surnameValue,
+        errorMessage: surnameErrorMessage
       }
     })
 
@@ -142,15 +168,30 @@ export default {
     })
 
     async function handleSubmit() {
-      if (!state.email.value || !state.password.value || !state.name.value) {
+      toast.clear()
+      if (
+        !state.email.value ||
+        !state.password.value ||
+        !state.name.value ||
+        !state.surname.value
+      ) {
+        toast.warning('Verifique seus dados e tente novamente')
+        return
+      }
+      if (
+        !!state.email.errorMessage ||
+        !!state.password.errorMessage ||
+        !!state.name.errorMessage ||
+        !!state.surname.errorMessage
+      ) {
         toast.warning('Verifique seus dados e tente novamente')
         return
       }
       try {
-        toast.clear()
         state.isLoading = true
         const { errors } = await services.auth.register({
           name: state.name.value,
+          surname: state.surname.value,
           email: state.email.value,
           password: state.password.value
         })
@@ -183,12 +224,12 @@ export default {
   }
 }
 </script>
-<style lang="postcss">
+<style lang="postcss" scoped>
 .custom-btn {
   @apply px-6 py-2 font-bold focus:outline-none transition duration-300;
 }
 
 .custom-input {
-  @apply outline-none block w-full px-4 py-3 mt-1 text-lg bg-gray-100 focus:bg-white border-2 border-transparent rounded focus:ring-0 focus:border-mediumslateblue-600;
+  @apply outline-none block w-full px-4 py-3 mt-1 text-lg bg-gray-100 focus:bg-white border-2 border-transparent rounded focus:ring-0 focus:border-mediumslateblue-600 ring-2 ring-mediumslateblue-100;
 }
 </style>

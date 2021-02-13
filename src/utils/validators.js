@@ -1,3 +1,20 @@
+export function emptyOrLength3(value) {
+  if (!value) {
+    return '*Este campo é obrigatório'
+  }
+  const isValid = /[A-Za-z]+$/.test(value)
+
+  if (!isValid) {
+    return '*Apenas letras'
+  }
+
+  if (value.length < 3) {
+    return '*Este campo precisa de no mínimo 3 caracteres'
+  }
+
+  return true
+}
+
 export function nameValidFormat(value) {
   if (!value) {
     return '*Este campo é obrigatório'
