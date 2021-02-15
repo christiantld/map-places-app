@@ -1,11 +1,8 @@
-import { defineAsyncComponent } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
-const Home = defineAsyncComponent(() => import('@/views/Home/index.vue'))
-const Profile = defineAsyncComponent(() => import('@/views/Profile/index.vue'))
-const Discovery = defineAsyncComponent(() =>
-  import('@/views/Discovery/index.vue')
-)
+const Home = () => import('@/views/Home/index.vue')
+const Profile = () => import('@/views/Profile/index.vue')
+const Discovery = () => import('@/views/Discovery/index.vue')
 
 const routes = [
   {

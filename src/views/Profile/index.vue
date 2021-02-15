@@ -27,8 +27,8 @@
       class="flex py-3 pl-5 mt-2 rounded relative justify-center align-center content-center flex-col bg-mediumslateblue-50 items-center w-4/5 lg:w-3/5"
     >
       <img
-        :src="state.avatar"
-        alt=""
+        :src="store.User.currentUser.newAvatar ?? state.avatar"
+        alt="Avatar do usuário"
         class="rounded-full ring-4 ring-mediumslateblue-400 my-4 h-36 w-36 z-1"
         :class="{ 'img--disabled': !state.isActive }"
       />
@@ -58,6 +58,7 @@
               class="block font-medium text-brand-danger"
               >{{ state.first_name.errorMessage }}</span
             >
+            <span v-else class="my-3"></span>
           </div>
           <div class="flex flex-col mt-4 md:ml-6 md:mt-0 w-64">
             <span class="text-lg font-medium text-brand-navyblue"
@@ -76,6 +77,7 @@
               class="block font-medium text-brand-danger"
               >{{ state.last_name.errorMessage }}</span
             >
+            <span v-else class="my-3"></span>
           </div>
         </label>
         <label class="flex flex-col mt-4">
@@ -93,6 +95,7 @@
             v-html="state.email.errorMessage"
             class="block font-medium text-brand-danger"
           ></span>
+          <span v-else class="my-3"></span>
         </label>
         <div class="my-4 flex justify-center">
           <button
@@ -135,10 +138,11 @@ import useModal from '@/hooks/useModal'
 import ProfileLoading from './ProfileLoading.vue'
 import services from '@/services'
 import Icon from '@/components/Icon'
-import { setCurrentUser } from '@/store/user'
+import { setCurrentUser, getCurrentUser } from '@/store/user'
 import { emailValidFormat, emptyOrLength3 } from '@/utils/validators'
 import { useToast } from 'vue-toastification'
 import { useField } from 'vee-validate'
+
 export default {
   components: { HeaderLogged, ProfileLoading, Icon },
   setup() {
@@ -181,13 +185,14 @@ export default {
         value: emailValue,
         errorMessage: emailErrorMessage
       },
-      avatar: userStore.avatar
+      avatar: userStore.avatar,
+      newAvatar: userStore.newAvatar
     })
 
     watch(
-      () => userStore,
+      () => store.User.currentUser,
       () => {
-        if (!userStore) {
+        if (!store.User.currentUser) {
           handleError(true)
         }
       }
@@ -207,10 +212,14 @@ export default {
     }
 
     function resetUserData() {
-      firstNameValue.value = userStore.first_name
-      lastNameValue.value = userStore.last_name
-      emailValue.value = userStore.email
-      state.avatar = userStore.avatar
+      const c = getCurrentUser()
+      delete c.newAvatar
+      setCurrentUser(c)
+
+      firstNameValue.value = c.first_name
+      lastNameValue.value = c.last_name
+      emailValue.value = c.email
+      state.avatar = c.avatar
     }
 
     function handleAvatarUpdate() {
@@ -239,16 +248,19 @@ export default {
       }
       try {
         state.isLoadingButton = true
+
         const data = {
           first_name: state.first_name.value,
           last_name: state.last_name.value,
-          email: state.email.value
+          email: state.email.value,
+          avatar: getCurrentUser().newAvatar ?? state.avatar
         }
+
         const { data: userData, errors } = await services.user.updateUser({
           ...userStore,
           ...data
         })
-
+        console.log(userData)
         if (!errors) {
           // Using localStorage because Reqres API don't really update data
           const currentUser = JSON.stringify(userData)
@@ -257,6 +269,10 @@ export default {
           even when route updates
           */
           setCurrentUser({ ...userStore, ...data })
+          const c = getCurrentUser()
+          delete c.newAvatar
+          state.avatar = c.avatar
+          setCurrentUser(c)
           state.isActive = false
           state.isLoadingButton = false
           toast.success('Dados alterados com sucesso')

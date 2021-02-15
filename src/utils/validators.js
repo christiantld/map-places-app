@@ -2,14 +2,14 @@ export function emptyOrLength3(value) {
   if (!value) {
     return '*Este campo é obrigatório'
   }
-  const isValid = /[A-Za-z]+$/.test(value)
+  const isValid = /^[A-Za-z]+$/.test(value)
 
   if (!isValid) {
     return '*Apenas letras'
   }
 
   if (value.length < 3) {
-    return '*Este campo precisa de no mínimo 3 caracteres'
+    return '*No mínimo 3 caracteres'
   }
 
   return true

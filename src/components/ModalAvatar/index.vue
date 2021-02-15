@@ -12,20 +12,24 @@
     </button>
   </div>
 
-  <div class="mt-6">
+  <div class="mt-6 flex flex-col justify-center items-center">
     <form @submit.prevent>
-      <label class="flex justify-center items-baseline">
-        <span class="text-lg font-medium text-brand-navyblue">Url:</span>
-        <input
-          ref="firstInput"
-          type="url"
-          class="custom-input mx-4"
-          placeholder="email@email.com"
-        />
+      <div class="flex items-baseline">
+        <label class="flex items-baseline">
+          <span class="text-lg font-medium text-brand-navyblue">Url:</span>
+          <input
+            ref="firstInput"
+            type="url"
+            class="custom-input ml-4"
+            v-model="state.avatar"
+          />
+        </label>
+      </div>
+      <div class="flex justify-center">
         <button
-          :disabled="state.isLoading"
+          @click="handleSubmit"
           type="submit"
-          class="text-lg bg-mediumslateblue-900 rounded-full mt-2 text-brand-gray hover:bg-mediumslateblue-500 custom-btn mr-4"
+          class="text-lg bg-mediumslateblue-900 rounded-full mt-6 text-brand-gray hover:bg-mediumslateblue-500 custom-btn mr-4"
           :class="{ 'opacity-50': state.isLoading }"
         >
           <icon
@@ -36,30 +40,52 @@
           />
           <span v-else>Salvar</span>
         </button>
-      </label>
+      </div>
     </form>
-    <!--
-        <span
-          v-if="!!state.email.errorMessage"
-          class="block font-medium text-brand-danger"
-          >{{ state.email.errorMessage }}</span
-        >
-    </form> -->
   </div>
 </template>
 
 <script>
 import { reactive } from 'vue'
+import { useToast } from 'vue-toastification'
+import Icon from '@/components/Icon'
+import { setCurrentUser } from '@/store/user'
+import useStore from '@/hooks/useStore'
 import useModal from '@/hooks/useModal'
+// import services from '@/services'
 export default {
+  components: { Icon },
   setup() {
+    // Hooks
     const modal = useModal()
+    const toast = useToast()
+    const store = useStore()
 
+    const userStore = store.User.currentUser
     const state = reactive({
-      isLoading: false
+      isLoading: false,
+      avatar: ''
     })
 
-    return { state, close: modal.close }
+    async function handleSubmit() {
+      toast.clear()
+      if (!state.avatar) {
+        toast.warning('Avatar em branco')
+        return
+      }
+
+      const data = {
+        newAvatar: state.avatar
+      }
+
+      setCurrentUser({ ...userStore, ...data })
+
+      state.isActive = false
+      state.isLoading = false
+      modal.close()
+    }
+
+    return { state, close: modal.close, handleSubmit }
   }
 }
 </script>
