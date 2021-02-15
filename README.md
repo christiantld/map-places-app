@@ -67,7 +67,7 @@ Agora o projeto pode ser acessado por padrão através da porta 8080
 
 ### Login na aplicação
 
-Os dados da aplicação estão mockados, utilizando a API pública (REQRES)[https://reqres.in/], para acessar utilize o usuário
+Os dados da aplicação estão mockados, utilizando a API pública [REQRES](https://reqres.in/), para acessar utilize o usuário
 ```
  email: "eve.holt@reqres.in",
  password: "cityslicka"
