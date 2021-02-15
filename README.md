@@ -20,6 +20,7 @@
 - [Iniciando o Projeto](#getting_started)
 - [Uso](#usage)
 - [Ferramentas](#built_using)
+- [Futuras Implemtações](#todos)
 - [Autor](#authors)
 
 ## 🏁 Iniciando o Projeto <a name = "getting_started"></a>
