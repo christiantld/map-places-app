@@ -1,7 +1,8 @@
 import { reactive } from 'vue'
 
 const state = reactive({
-  currentUser: {}
+  currentUser: {},
+  favoritePlaces: []
 })
 
 export default state
@@ -12,4 +13,20 @@ export function cleanCurrentUser() {
 
 export function setCurrentUser(user) {
   state.currentUser = user
+}
+
+export function getCurrentUser() {
+  return state.currentUser
+}
+
+export function cleanFavoritePlaces() {
+  state.favoritePlaces = {}
+}
+
+export function setFavoritePlaces(user) {
+  state.favoritePlaces = user
+}
+
+export function getFavoritePlaces() {
+  return state.favoritePlaces
 }
