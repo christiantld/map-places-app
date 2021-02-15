@@ -29,6 +29,7 @@
 
 * [Node Js](https://nodejs.org/en/)
 * [NPM](https://www.npmjs.com/get-npm)
+* [VUE CLI](https://cli.vuejs.org/guide/prototyping.html)
 
 ### Clonando o projeto
 
