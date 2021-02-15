@@ -58,6 +58,17 @@ Dentro da pasta do projeto, instale as dependências
 npm install
 ```
 
+### Configurando arquivos .env
+
+Nessa etapa você deve cduplicar o arquivo `.env.example` e renomear para `.env`. Em seguida no campo `VUE_APP_PLACES_API_KEY` você deve inserir a sua chave de api disponibilizada pelo google. Mais informações sobre como obeter a chave [AQUI](https://developers.google.com/places/web-service/get-api-key)
+
+exemplo:
+```
+NODE_ENV=development
+VUE_APP_API_USERS_URL=https://reqres.in/api/
+VUE_APP_PLACES_API_KEY=AbABcDJDJd98888hjImnGTF
+```
+
 ### Iniciando a aplicação localmente
 Pelo seu terminal, dentro do diretório criado para o projeto, rode o comando abaixo.
 ```
