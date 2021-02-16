@@ -133,8 +133,9 @@ export default {
     }
 
     async function findNearbyPlaces() {
+      state.hasError = false
       state.places = false
-      const CORS = 'https://cors-anywhere.herokuapp.com/'
+      const CORS = 'https://cors.bridged.cc/'
       const API_KEY = process.env.VUE_APP_PLACES_API_KEY
       const URL = `${CORS}https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${
         state.latitude
