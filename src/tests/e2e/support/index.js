@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // ***********************************************************
 // This example support/index.js is processed and
 // loaded automatically before your test files.
@@ -18,3 +19,17 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+beforeEach(() => {
+  cy.visit('/')
+  cy.fixture('login').then(({ request, response }) => {
+    Cypress.env('loginRequest', request)
+    Cypress.env('loginResponse', response)
+  })
+  cy.fixture('signin').then(({ request, response }) => {
+    Cypress.env('signinRequest', request)
+    Cypress.env('signinResponse', response)
+  })
+  cy.fixture('getUser').then(({ data }) => {
+    Cypress.env('getUserResponse', data)
+  })
+})

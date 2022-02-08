@@ -17,10 +17,12 @@
           <button
             class="rounded-full text-brand-darkinfo hover:text-mediumslateblue-500 custom-btn"
             @click="() => emit('create-account')"
+            data-cy="header-signin"
           >
             Crie uma conta
           </button>
           <button
+            data-cy="header-login"
             @click="() => emit('login')"
             class="bg-brand-navyblue rounded-full text-brand-gray hover:bg-mediumslateblue-500 custom-btn"
           >
@@ -43,6 +45,7 @@
         <div>
           <button
             @click="() => emit('create-account')"
+            data-cy="body-signin"
             class="mt-10 bg-brand-navyblue rounded-full text-brand-gray hover:bg-mediumslateblue-500 custom-btn"
           >
             Crie sua conta agora

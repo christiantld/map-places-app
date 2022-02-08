@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between align-baseline">
+  <div class="flex justify-between align-baseline" data-cy="modal-login">
     <h1 class="text-3xl text-center font-black text-brand-navyblue">
       Entre na sua conta
     </h1>
@@ -7,6 +7,7 @@
     <button
       class="text-4xl text-gray-400 hover:text-gray-600 focus:outline-none transition duration-300"
       @click="close"
+      data-cy="close-modal-login"
     >
       &times;
     </button>
@@ -25,10 +26,12 @@
             'border-brand-danger': !!state.email.errorMessage
           }"
           placeholder="email@email.com"
+          data-cy="login-email-input"
         />
         <span
           v-if="!!state.email.errorMessage"
           class="block font-medium text-brand-danger"
+          data-cy="email-error"
           >{{ state.email.errorMessage }}</span
         >
       </label>
@@ -42,11 +45,13 @@
             'border-brand-danger': !!state.password.errorMessage
           }"
           placeholder="*******"
+          data-cy="login-password-input"
         />
         <span
           v-if="!!state.password.errorMessage"
           v-html="state.password.errorMessage"
           class="block font-medium text-brand-danger"
+          data-cy="password-error"
         ></span>
       </label>
       <button
@@ -54,6 +59,7 @@
         type="submit"
         class="mt-10 text-2xl text-white rounded-full bg-brand-navyblue hover:bg-mediumslateblue-500 custom-btn"
         :class="{ 'opacity-50': state.isLoading }"
+        data-cy="submit-login"
       >
         <icon
           v-if="state.isLoading"

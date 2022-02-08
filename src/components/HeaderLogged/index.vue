@@ -9,18 +9,21 @@
         <li
           @click="() => router.push({ name: 'Discovery' })"
           class="mr-2 text-white hover:text-gray-400 rounded-full cursor-pointer custom-btn"
+          data-cy="nav-discovery"
         >
           Descobrir locais
         </li>
         <li
           @click="() => router.push({ name: 'Profile' })"
           class="mr-2 text-white hover:text-gray-400 rounded-full cursor-pointer custom-btn"
+          data-cy="nav-profile"
         >
           Meu perfil
         </li>
         <li
           @click="handleLogout"
           class="bg-white rounded-full cursor-pointer text-brand-navyblue hover:bg-gray-400 custom-btn"
+          data-cy="logout"
         >
           {{ logoutLabel }}
         </li>

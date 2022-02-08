@@ -1,0 +1,12 @@
+{
+  "request": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "eve.holt@reqres.in",
+    "password": "pistol"
+  },
+  "response" : {
+    "token": "QpwL5tke4Pnpja7X4",
+    "id": 4
+  }
+}

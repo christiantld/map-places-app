@@ -1,10 +1,11 @@
 <template>
-  <div class="flex justify-between">
+  <div class="flex justify-between" data-cy="modal-signin">
     <h1 class="text-3xl font-black text-brand-navyblue">Crie uma conta</h1>
 
     <button
       class="text-4xl text-gray-400 hover:text-gray-600 focus:outline-none transition duration-300"
       @click="close"
+      data-cy="modal-signin-close"
     >
       &times;
     </button>
@@ -23,10 +24,12 @@
             'border-brand-danger': !!state.name.errorMessage
           }"
           placeholder="Seu primeiro nome"
+          data-cy="modal-signin-name"
         />
         <span
           v-if="!!state.name.errorMessage"
           class="block font-medium text-brand-danger"
+          data-cy="modal-signin-name-error"
           >{{ state.name.errorMessage }}</span
         >
       </label>
@@ -40,10 +43,12 @@
             'border-brand-danger': !!state.surname.errorMessage
           }"
           placeholder="Seu sobrenome"
+          data-cy="modal-signin-surname"
         />
         <span
           v-if="!!state.surname.errorMessage"
           class="block font-medium text-brand-danger"
+          data-cy="modal-signin-surname-error"
           >{{ state.surname.errorMessage }}</span
         >
       </label>
@@ -57,10 +62,12 @@
             'border-brand-danger': !!state.email.errorMessage
           }"
           placeholder="email@email.com"
+          data-cy="modal-signin-email"
         />
         <span
           v-if="!!state.email.errorMessage"
           class="block font-medium text-brand-danger"
+          data-cy="modal-signin-email-error"
           >{{ state.email.errorMessage }}</span
         >
       </label>
@@ -74,11 +81,13 @@
             'border-brand-danger': !!state.password.errorMessage
           }"
           placeholder="*******"
+          data-cy="modal-signin-password"
         />
         <span
           v-if="!!state.password.errorMessage"
           v-html="state.password.errorMessage"
           class="block font-medium text-brand-danger"
+          data-cy="modal-signin-password-error"
         ></span>
       </label>
       <button
@@ -86,6 +95,7 @@
         type="submit"
         class="mt-10 text-2xl font-bold text-white rounded-full bg-brand-navyblue hover:bg-mediumslateblue-500 custom-btn"
         :class="{ 'opacity-50': state.isLoading }"
+        data-cy="modal-signin-submit"
       >
         <icon
           v-if="state.isLoading"
