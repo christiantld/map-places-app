@@ -24,7 +24,7 @@
             'border-brand-danger': !!state.name.errorMessage
           }"
           placeholder="Seu primeiro nome"
-          data-cy="modal-signin-name"
+          data-cy="signin-name-input"
         />
         <span
           v-if="!!state.name.errorMessage"
@@ -43,7 +43,7 @@
             'border-brand-danger': !!state.surname.errorMessage
           }"
           placeholder="Seu sobrenome"
-          data-cy="modal-signin-surname"
+          data-cy="signin-surname-input"
         />
         <span
           v-if="!!state.surname.errorMessage"
@@ -62,7 +62,7 @@
             'border-brand-danger': !!state.email.errorMessage
           }"
           placeholder="email@email.com"
-          data-cy="modal-signin-email"
+          data-cy="signin-email-input"
         />
         <span
           v-if="!!state.email.errorMessage"
@@ -81,7 +81,7 @@
             'border-brand-danger': !!state.password.errorMessage
           }"
           placeholder="*******"
-          data-cy="modal-signin-password"
+          data-cy="signin-password-input"
         />
         <span
           v-if="!!state.password.errorMessage"
