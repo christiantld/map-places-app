@@ -9,8 +9,7 @@
     "lint": "vue-cli-service lint",
     "start": "node server.js",
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
-    "cy:dashboard": "cypress run --record --key 8d6ac5fa-31c4-484f-9d6e-431666f06c8d --config video=false"
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.3",
